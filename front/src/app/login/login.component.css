@@ -1,0 +1,16 @@
+.loginForm {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.titleApp {
+    font-weight: 300;
+    color: #EEAE0A;
+    letter-spacing: 5%;
+}
+
+.btnLogin {
+
+}
