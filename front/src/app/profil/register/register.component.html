@@ -1,0 +1,35 @@
+<div class="main">
+    <h1>Piguisfy</h1>
+    <div class="gridForm">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="inputContainer">
+                <input class="" type="email" formControlName="email" placeholder="Email" required>
+                <span class="bottomBorder"></span>
+            </div>
+
+            <div class="inputContainer">
+                <input class="" type="text" formControlName="username" placeholder="Username" required>
+                <span class="bottomBorder"></span>
+            </div>
+
+            <div class="inputContainer">
+                <input class="" type="password" formControlName="password" placeholder="Password" required>
+                <span class="bottomBorder"></span>
+            </div>
+
+            <!-- <div class="inputContainer">
+                <input class="" type="password" formControlName="password" placeholder="Confirm password" required>
+                <span class="bottomBorder"></span>
+            </div> -->
+
+            <div class="inputContainer">
+                <input class="" type="text" formControlName="country" placeholder="Country" required>
+                <span class="bottomBorder"></span>
+            </div>
+
+            <div class="inputContainer">
+                <input class="submitBtn" type="submit" value="Register">
+            </div>
+        </form>
+    </div>
+</div>
