@@ -1,16 +1,18 @@
 <div class="loginForm">
     <h1 class="titleApp">Piguisfy</h1>
-    <div>
-        icon @
-        <input type="email" name="email" id="email" placeholder="Email">
-    </div>
-    <div>
-        icon cadenas
-        <input type="password" name="password" id="password" placeholder="Password">
-        oeil
-    </div>
-    <div class="btnLogin">
-        <input type="button" value="Login">
-        <a href="/register">No account? Sign up!</a>
-    </div>
+    <form action="/login" method="post" (ngSubmit)="onSubmit()">
+        <div class="inputContainer">
+            icon @
+            <input class="" type="email" formControlName="email" placeholder="Email" required>
+        </div>
+        <div class="inputContainer">
+            icon cadenas
+            <input class="" type="password" formControlName="password" placeholder="Password" required>
+            oeil
+        </div>
+        <div class="btnLogin">
+            <input class="submitBtn" type="submit" value="Login">
+            <a href="/register">No account? Sign up!</a>
+        </div>
+    </form>
 </div>

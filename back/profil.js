@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 function createRouter(db) {
     //Mettre les routes ici
 
+// -------------------- REGISTER --------------------
     // add a new user into the DB
     router.post('/APIPiguisfy', (req, res, next) => {
         const salt = bcrypt.genSaltSync(10);

@@ -11,6 +11,6 @@
     letter-spacing: 5%;
 }
 
-.btnLogin {
-
+.submitBtn {
+    cursor: pointer;
 }
