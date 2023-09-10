@@ -11,12 +11,8 @@ export const login = async (req, res) => {
         res.status(400).json({ message: 'Please provide an email and a password.' })
     }
 
-    console.log(res.data)
-
     await findOneByEmail(email)
     .then((user) => {
-      console.log(user)
-
       if(user.length < 1) {
         res.status(401).json({ message: 'User not found.' })
         return
