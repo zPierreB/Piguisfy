@@ -14,7 +14,7 @@ export const login = async (req, res) => {
     await findOneByEmail(email)
     .then((user) => {
       if(user.length < 1) {
-        res.status(401).json({ message: 'User not found.' })
+        res.status(401).json({ message: 'Provided informations are incorrect.' })
         return
       }
       
@@ -29,10 +29,16 @@ export const login = async (req, res) => {
           expiresIn: "6h",
         })
         
+        console.log('bv bg')
         res.status(200).json({ authToken: authToken })
       }
     })
     .catch((error) => res.status(500).json({ message: `Internet Server Error: ${error}` }))
+}
+
+export const verify = (req, res) => {
+  console.log(req.payload)
+  res.status(200).json(req.payload)
 }
 
 export const logout = async(req, res) => {
