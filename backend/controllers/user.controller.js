@@ -24,12 +24,11 @@ export const login = async (req, res) => {
         const { id, email } = user
         const payload = { id, email }
         
-        const authToken = jwt.sign(payload, process.env.PRIVATE_KEY, {
+        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
           expiresIn: "6h",
         })
         
-        console.log('bv bg')
         res.status(200).json({ authToken: authToken })
       }
     })
@@ -37,7 +36,6 @@ export const login = async (req, res) => {
 }
 
 export const verify = (req, res) => {
-  console.log(req.payload)
   res.status(200).json(req.payload)
 }
 

@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const isAuthenticated = (req, res, next) => {
-    console.log('coucou')
+
   const token = getTokenFromHeaders(req);
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-
+  
   jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized' });

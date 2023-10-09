@@ -14,7 +14,7 @@ const AuthProvider = (props) => {
 
     const authenticateUser = () => {
       const storedToken = localStorage.getItem("authToken");
-      console.log(storedToken)
+
       if (storedToken) {
         axios
         // eslint-disable-next-line no-undef
