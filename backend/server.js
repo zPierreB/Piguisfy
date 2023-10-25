@@ -1,8 +1,10 @@
 import express from 'express'
 import 'dotenv/config'
 import cors from 'cors'
+import fileUpload from 'express-fileupload'
 
 import userRouter from './routes/user.routes.js'
+import trackRouter from './routes/track.routes.js'
 
 const { PORT, CLIENT_URL } = process.env
 
@@ -16,10 +18,13 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+app.use(fileUpload())
+app.use(express.static("public"));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/', userRouter)
+app.use('/myspace', trackRouter)
 
 app.get('*', (req, res) => {
     res.redirect('/login')

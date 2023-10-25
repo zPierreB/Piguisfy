@@ -13,7 +13,7 @@ const isAuthenticated = (req, res, next) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-
+  
     req.payload = decoded;
     next();
   });

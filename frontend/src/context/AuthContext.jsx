@@ -9,29 +9,28 @@ const AuthProvider = (props) => {
     const [user, setUser] = useState(null)
 
     const storeToken = (token) => {
-        localStorage.setItem('authToken', token)
+      localStorage.setItem('authToken', token)
+      console.log('coucou coco')
     }
 
-    const authenticateUser = () => {
+    const authenticateUser = async() => {
       const storedToken = localStorage.getItem("authToken");
 
       if (storedToken) {
-        axios
-        // eslint-disable-next-line no-undef
-        .get(`http://localhost:8000/verify`, {
+        await axios.get(`http://localhost:8000/verify`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
-            .then((response) => {
-              const user = response.data;
-              setIsLogged(true);
-              setIsLoading(false);
-              setUser(user);
-            })
-            .catch((error) => {
-              setIsLogged(false);
-              setIsLoading(false);
-              setUser(null);
-            });
+          .then((response) => {
+            const user = response.data;
+            setIsLogged(true);
+            setIsLoading(false);
+            setUser(user);
+          })
+          .catch((error) => {
+            setIsLogged(false);
+            setIsLoading(false);
+            setUser(null);
+          });
         } else {
           setIsLogged(false);
           setIsLoading(false);

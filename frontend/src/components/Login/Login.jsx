@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
 import axios from 'axios'
 
 import { AuthContext } from "../../context/AuthContext"
@@ -17,19 +17,16 @@ const Login = () => {
         e.preventDefault()
 
         const params = { email, password }
-
-        console.log(email, password)
-
-        
+       
         await axios.post('http://localhost:8000/login', params)
-        .then((response) => {
+        .then(async(response) => {
             const jwt = response.data.authToken
-            console.log(response.data)
 
-            storeToken(jwt)
-            authenticateUser()
+            await storeToken(jwt)
+            await authenticateUser()
 
             navigate('/')
+            console.log('alors on danse?')
         })
         .catch((error) => {
             const errorDescription = error.response.data.message;
@@ -39,23 +36,25 @@ const Login = () => {
     }
     
     return(
-        <>
-            <h1>Please Log In</h1>
-            <form action="" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="text" name="email" id="" onChange={(e) => setEmail(e.target.value)}/>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" name="password" id="" onChange={(e) => setPassword(e.target.value)}/>
-                </div>
-                <div>
-                    <p>{errorMessage}</p>
-                    <button type="submit">Log in</button>
-                </div>
-            </form>
-        </>
+      <div className="main">
+        <section className="loginRegisterModal">
+          <h1>Log In</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="inputContainer">
+              <label htmlFor="email">Email</label>
+              <input type="text" name="email" id="" onChange={(e) => setEmail(e.target.value)}/>
+            </div>
+            <div className="inputContainer">
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" id="" onChange={(e) => setPassword(e.target.value)}/>
+            </div>
+            <div>
+              <p>{errorMessage}</p>
+              <button type="submit">Log in</button>
+            </div>
+          </form>
+        </section>
+      </div>
     )
 }
 
