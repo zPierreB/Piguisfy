@@ -1,6 +1,8 @@
-import { findAllAlbums } from '../models/album.model.js'
+import { findAllAlbumsByUserId } from '../models/album.model.js'
 
-export const getAllAlbums = async (req, res) => {
-  const albums = await findAllAlbums()
+export const getAllAlbumsByUser = async (req, res) => {
+  const userId = req.user.id
+
+  const albums = await findAllAlbumsByUserId([userId])
   res.status(200).json(albums)
 }

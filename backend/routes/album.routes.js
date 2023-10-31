@@ -1,6 +1,8 @@
 import express from 'express'
 const router = express.Router()
 
-import { getAllAlbums } from '../controllers/album.controller.js'
+import { getAllAlbumsByUser } from '../controllers/album.controller.js'
 
-router.get('/', getAllAlbums)
+router.get('/', getAllAlbumsByUser)
+
+// TODO TO REMOVE ???

@@ -1,27 +1,25 @@
-import path from 'path';
-import { getAudioDurationInSeconds } from 'get-audio-duration';
-
-import uploadFile from "../middleware/upload.js";
 import { addOneTrack } from "../models/track.model.js";
+import { findOneAlbumByIdAndUserId } from "../models/album.model.js";
 
 export const add1Track = async (req, res, next) => {
-  getAudioDurationInSeconds(req.files.file.name).then((duration) => {
-    console.log(req.files.file.name)
-    console.log(duration)
-})
-  // uploadFile(req, res, (err) => {
-  //   if (err) {
-  //     return res.status(400).send({ message: "Please upload a file!" });
-  //   }
-  //   console.log(req.file);
-  // })
-
-  await addOneTrack([req.body.name, 120, 'path', 1])
-  .then((track) => {
-    let audio = req.files.file
-    console.log(audio.duration)
-    console.log('track: ', track)
-    // res.status(200).json({ message: 'Track added successfully.' })
-  })
-  .catch((error) => res.status(500).json({ message: 'Error during the creation of a music.' }))
+  console.log('req.body: ', req.body)
+  // Check if the album exists and belongs to the user
+  const album = await findOneAlbumByIdAndUserId([req.user.id, req.body.album])
+  console.log('album: ', album)
+  if(album.length < 1) {
+    return res.status(403).json({ message: 'Unauthorized empty' })
+  } else {
+    // Correct the path of the file
+    const newPath = req.file.path.replace(/\\/g, "/")
+    
+    // Format the duration of the track in seconds
+    const duration = Math.ceil(req.body.duration)
+    
+    await addOneTrack([req.file.originalname, duration, newPath, album[0].id])
+    .then((track) => {
+      console.log('track: ', track)
+      res.status(200).json({ message: 'Track added successfully.' })
+    })
+    .catch((error) => res.status(500).json({ message: 'Error during the creation of a music.' }))
+  }
 }

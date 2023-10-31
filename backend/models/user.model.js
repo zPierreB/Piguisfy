@@ -5,3 +5,9 @@ export const findOneByEmail = async (arg) => {
 
     return await dbConnect(sql_string, arg)
 }
+
+export const findOneByEmailAndId = async (arg) => {
+    const sql_string = 'SELECT * FROM users WHERE email = ? AND id = ?'
+
+    return await dbConnect(sql_string, arg)
+}

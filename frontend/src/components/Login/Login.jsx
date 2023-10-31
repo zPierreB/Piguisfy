@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { redirect, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 
 import { AuthContext } from "../../context/AuthContext"
@@ -26,7 +26,6 @@ const Login = () => {
             await authenticateUser()
 
             navigate('/')
-            console.log('alors on danse?')
         })
         .catch((error) => {
             const errorDescription = error.response.data.message;
@@ -42,13 +41,13 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="inputContainer">
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" id="" onChange={(e) => setEmail(e.target.value)}/>
+              <input type="text" name="email" id="name" onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div className="inputContainer">
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="" onChange={(e) => setPassword(e.target.value)}/>
+              <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}/>
             </div>
-            <div>
+            <div className="btnContainer">
               <p>{errorMessage}</p>
               <button type="submit">Log in</button>
             </div>

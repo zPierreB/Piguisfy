@@ -13,7 +13,8 @@ export const findOneTrack = async (arg) => {
 }
 
 export const addOneTrack = async (arg) => {
-    const sql_string = 'INSERT INTO tracks (name, duration, path, albumId) VALUES (?, ?, ?, ?)'
+
+    const sql_string = 'INSERT INTO tracks (name, duration, path, album_id) VALUES (?, ?, ?, ?)'
 
     return await dbConnect(sql_string, arg)
 }
