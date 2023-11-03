@@ -24,13 +24,11 @@ const isAuthenticated = (req, res, next) => {
     }
 
     req.user = checkUser[0];
-    console.log('req.user: ', req.user)
     next();
   });
 };
 
 function getTokenFromHeaders(req) {
-  console.log(req.headers.authorization)
   if (
     req.headers.authorization &&
     req.headers.authorization.split(' ')[0] === 'Bearer'

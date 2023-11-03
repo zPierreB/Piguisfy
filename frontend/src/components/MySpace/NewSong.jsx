@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
 
 import { AuthContext } from '../../context/AuthContext.jsx'
@@ -15,7 +16,9 @@ const NewSong = () => {
     getAlbums()
   }, [])
 
-  const { user, token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
+
+  const navigate = useNavigate()
 
   const getAlbums = async() => {
 
@@ -44,9 +47,12 @@ const NewSong = () => {
     })
     .then((response) => {
       console.log(response.data)
+
+      navigate('/myspace')
     })
     .catch((error) => {
-      throw error.response.data
+      const errorDescription = error.response.data.message;
+      setErrorMessage(errorDescription);
     })
   };
 
@@ -62,25 +68,30 @@ const NewSong = () => {
   }
 
   return(
-    <div>
+    <div className='main'>
+      <section className='loginRegisterModal'>
       <h2>Add a new song</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='path'>File</label>
-          <input type='file' name='audioFile' onChange={handleFileChange}/>
-        </div>
-        <div>
-          <label htmlFor='album'>Album</label>
-          <select name='album' onChange={(e) => setSelectedAlbumId(e.target.value)}>
-            {albums.map((album, index) => {
-              return <option key={index} value={album.id}>{album.name}</option>
-            })}
-          </select>
-        </div>
-        <div>
-          <button type="submit">Create a song</button>
-        </div>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className='inputContainer'>
+            <label htmlFor='path'>File</label>
+            <input type='file' name='audioFile' onChange={handleFileChange}/>
+          </div>
+          <div className='inputContainer'>
+            <label htmlFor='album'>Album</label>
+            <select name='album' onChange={(e) => setSelectedAlbumId(e.target.value)}>
+              <option value="none" selected disabled>Select an album</option>
+              {albums.map((album, index) => {
+                return <option key={index} value={album.id}>{album.name}</option>
+              })}
+            </select>
+          </div>
+          <div className='btnContainer'>
+            <p>{errorMessage}</p>
+            <Link to='/myspace'>Cancel</Link>
+            <button type="submit">Create a song</button>
+          </div>
+        </form>
+      </section>
     </div>
   )
 

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
     const [playlists, setPlaylists] = useState([])
-    const [user, setUser] = useState({})
 
     // const index = async () => {
     //     const response = await axios.get('http://localhost:8000/playlists')

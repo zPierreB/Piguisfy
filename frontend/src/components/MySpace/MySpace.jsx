@@ -15,9 +15,9 @@ const MySpace = () => {
   return (
     <div>
       <h1>My space</h1>
-      <Link to='/myspace/addsong'>Publier une nouvelle chanson!</Link>
-      <Link to='/myspace/addalbum'>Publier un nouvel album!</Link>
-      <Link to='/logout'>Log out</Link>
+      <Link to='/myspace/addsong'>Publier une nouvelle chanson!</Link><br/>
+      <Link to='/myspace/addalbum'>Publier un nouvel album!</Link><br/>
+      <Link to='/logout'>Log out</Link><br/>
     </div>
   );
 }

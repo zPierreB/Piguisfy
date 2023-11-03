@@ -11,3 +11,9 @@ export const findOneAlbumByIdAndUserId = async (arg) => {
 
     return await dbConnect(sql_string, arg)
 }
+
+export const addOneAlbum = async (arg) => {
+    const sql_string = 'INSERT INTO albums (name, release_date, image, artist_id) VALUES (?, ?, ?, ?)';
+
+    return await dbConnect(sql_string, arg)
+}
