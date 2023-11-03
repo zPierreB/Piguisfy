@@ -5,22 +5,22 @@ import checkFileType from '../utils/checkFileType.js';
 // Set up multer storage engine
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/uploads/');
+    cb(null, 'public/images/');
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
   },
 });
 
-const allowedTypes = /mp3|wav|ogg|flac|mpeg/;
+const allowedTypes = /png|jpg|jpeg/;
 
 // Set up multer upload middleware
-const uploadFile = multer({
+const uploadImage = multer({
   storage: storage,
-  limits: { fileSize: 100000000 },
+  limits: { fileSize: 1000000 },
   fileFilter: function (req, file, cb) {
     checkFileType(file, allowedTypes, cb);
   },
-}).single('audioFile')
+}).single('image')
 
-export default uploadFile;
+export default uploadImage;
