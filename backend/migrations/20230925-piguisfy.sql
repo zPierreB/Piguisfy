@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 30, 2023 at 03:14 PM
--- Server version: 8.0.27
--- PHP Version: 8.0.13
+-- Hôte : 127.0.0.1:3306
+-- Généré le : lun. 25 sep. 2023 à 16:32
+-- Version du serveur : 8.0.27
+-- Version de PHP : 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `piguisfy`
+-- Base de données : `piguisfy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `albums`
+-- Structure de la table `albums`
 --
 
 DROP TABLE IF EXISTS `albums`;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `albums` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artists`
+-- Structure de la table `artists`
 --
 
 DROP TABLE IF EXISTS `artists`;
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `artists` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `playlists`
+-- Structure de la table `playlists`
 --
 
 DROP TABLE IF EXISTS `playlists`;
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `playlists` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `playliststracks`
+-- Structure de la table `playliststracks`
 --
 
 DROP TABLE IF EXISTS `playliststracks`;
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `playliststracks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tracks`
+-- Structure de la table `tracks`
 --
 
 DROP TABLE IF EXISTS `tracks`;
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `tracks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Structure de la table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -123,43 +123,43 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `gender`, `email`, `password`, `dateOfBirth`, `profilPic`) VALUES
-(1, 'Pigos', 'man', 'pierre-briere@orange.fr', 'Pepe123!', '1998-02-20', 'https://images.unsplash.com/photo-1635107510862-53886e926b74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80');
+(1, 'Pigos', 'man', 'pierre-briere@orange.fr', '$2b$10$G7drpH8HfLf2m2dVOL3D/.QvjzzTRxLUD3z.G2sWCKVR7hBY6/xUa', '1998-02-20', 'https://images.unsplash.com/photo-1635107510862-53886e926b74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80');
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `albums`
+-- Contraintes pour la table `albums`
 --
 ALTER TABLE `albums`
   ADD CONSTRAINT `albums_ibfk_1` FOREIGN KEY (`artistId`) REFERENCES `artists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `artists`
+-- Contraintes pour la table `artists`
 --
 ALTER TABLE `artists`
   ADD CONSTRAINT `artists_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `playlists`
+-- Contraintes pour la table `playlists`
 --
 ALTER TABLE `playlists`
   ADD CONSTRAINT `playlists_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `playliststracks`
+-- Contraintes pour la table `playliststracks`
 --
 ALTER TABLE `playliststracks`
   ADD CONSTRAINT `playliststracks_ibfk_1` FOREIGN KEY (`trackId`) REFERENCES `tracks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `playliststracks_ibfk_2` FOREIGN KEY (`playlistId`) REFERENCES `playlists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tracks`
+-- Contraintes pour la table `tracks`
 --
 ALTER TABLE `tracks`
   ADD CONSTRAINT `tracks_ibfk_1` FOREIGN KEY (`albumId`) REFERENCES `albums` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
