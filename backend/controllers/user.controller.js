@@ -2,7 +2,42 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
-import { findOneByEmail } from '../models/user.model.js'
+import { findOneByEmail, findOneByUsernameAndEmail, createOneUser } from '../models/user.model.js'
+
+export const register = async (req, res) => {
+  const { username, email, password, confirmPassword, dateOfBirth } = req.body
+  const { profilePicture } = req.file
+
+  if(username === "" || email === "" || password === "" || confirmPassword === "" || dateOfBirth === "" || profilePicture === "") {
+    return res.status(400).json({ message: 'Please provide all the required fields.' })
+  }
+
+  await findOneByUsernameAndEmail([username, email])
+  .then(async(user) => {
+    console.log('user', user)
+    if(user.length > 0) {
+      res.status(400).json({ message: 'Username or email is already taken.' })
+      return
+    } else if(password !== confirmPassword) {
+      res.status(400).json({ message: 'Passwords do not match.' })
+      return
+    } else if(req.file.path === undefined) {
+      res.status(400).json({ message: 'Please upload a file in mp3, wav or mpeg format' })
+      return
+    } else {
+      const salt = bcrypt.genSaltSync(10)
+      const hashedPassword = bcrypt.hashSync(password, salt)
+
+      const newPath = req.file.path.replace(/\\/g, "/")
+
+      await createOneUser([username, email, hashedPassword, dateOfBirth, newPath])
+      .then((user) => {
+        res.status(201).json({ message: 'User created successfully.' })
+      })
+      .catch((error) => res.status(500).json({ message: `Internet Server Error: ${error}` }))
+    }
+  })
+}
 
 export const login = async (req, res) => {
     const { email, password } = req.body

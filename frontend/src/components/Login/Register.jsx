@@ -9,31 +9,39 @@ const Register = ({ changeForm }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [dateOfBirth, setDateOfBirth] = useState('')
+  const [profilePicture, setProfilePicture] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   const navigate = useNavigate()
 
-  const { storeToken, authenticateUser } = useContext(AuthContext)
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const params = { email, password }
+    const formData = new FormData();
+    formData.append('username', username)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('confirmPassword', confirmPassword)
+    formData.append('dateOfBirth', dateOfBirth)
+    formData.append('image', profilePicture)
 
-    await axios.post('http://localhost:8000/login', params)
+    await axios.post('http://localhost:8000/register', formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    })
       .then(async (response) => {
-        const jwt = response.data.authToken
+        console.log(response.data)
 
-        await storeToken(jwt)
-        await authenticateUser()
-
-        navigate('/')
+        navigate('/login')
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
-        console.log("error loggin in...", errorDescription);
         setErrorMessage(errorDescription);
       });
+  }
+
+  const handleFileChange = async (e) => {
+    setProfilePicture(e.target.files[0])
   }
 
   return (
@@ -46,7 +54,7 @@ const Register = ({ changeForm }) => {
         </div>
         <div className="inputContainer">
           <label htmlFor="email">Email</label>
-          <input type="text" name="email" id="name" onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="inputContainer">
           <label htmlFor="password">Password</label>
@@ -57,12 +65,14 @@ const Register = ({ changeForm }) => {
           <input type="password" name="confirmPassword" id="confirmPassword" onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
         <div className="inputContainer">
-          <label htmlFor="dateOfBirth">Date of Birth</label>
-          <input type="date" name="dateOfBirth" id="dateOfBirth" />
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="profilPicture">Profile Picture</label>
-          <input type="file" name="profilPicture" id="profilPicture" />
+          <section>
+            <label htmlFor="dateOfBirth">Date of Birth</label>
+            <input type="date" name="dateOfBirth" id="dateOfBirth" onChange={(e) => setDateOfBirth(e.target.value)}/>
+          </section>
+          <section>
+            <label htmlFor="profilPicture">Profile Picture</label>
+            <input type="file" name="profilPicture" id="profilPicture" onChange={handleFileChange}/>
+          </section>
         </div>
         <div className="btnContainer">
           <p>{errorMessage}</p>

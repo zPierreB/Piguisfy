@@ -79,7 +79,7 @@ const NewSong = () => {
           <div className='inputContainer'>
             <label htmlFor='album'>Album</label>
             <select name='album' onChange={(e) => setSelectedAlbumId(e.target.value)}>
-              <option value="none" selected disabled>Select an album</option>
+              <option defaultValue="none" disabled>Select an album</option>
               {albums.map((album, index) => {
                 return <option key={index} value={album.id}>{album.name}</option>
               })}

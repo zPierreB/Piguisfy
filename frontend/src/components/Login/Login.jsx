@@ -40,7 +40,7 @@ const Login = ({ changeForm }) => {
       <form onSubmit={handleSubmit}>
         <div className="inputContainer">
           <label htmlFor="email">Email</label>
-          <input type="text" name="email" id="name" onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" name="email" id="name" onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="inputContainer">
           <label htmlFor="password">Password</label>
