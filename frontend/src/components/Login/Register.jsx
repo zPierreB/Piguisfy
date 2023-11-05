@@ -1,8 +1,6 @@
-import { useState, useContext } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios'
-
-import { AuthContext } from "../../context/AuthContext"
 
 const Register = ({ changeForm }) => {
   const [username, setUsername] = useState('')

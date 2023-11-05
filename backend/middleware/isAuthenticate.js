@@ -4,9 +4,9 @@ dotenv.config();
 
 import { findOneByEmailAndId } from '../models/user.model.js'
 
-const isAuthenticated = (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
 
-  const token = getTokenFromHeaders(req);
+  const token = await getTokenFromHeaders(req);
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized token' });
   }
@@ -22,18 +22,14 @@ const isAuthenticated = (req, res, next) => {
     if(checkUser.length < 1) {
       return res.status(401).json({ message: 'User uncheck' });
     }
-
     req.user = checkUser[0];
     next();
   });
 };
 
 function getTokenFromHeaders(req) {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(' ')[0] === 'Bearer'
-  ) {
-    const token = req.headers.authorization.split(' ')[1];
+  if (req.headers.authorization) {
+    const token = req.headers.authorization;
     return token;
   }
 

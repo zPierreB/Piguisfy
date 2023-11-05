@@ -17,7 +17,7 @@ const allowedTypes = /png|jpg|jpeg/;
 // Set up multer upload middleware
 const uploadImage = multer({
   storage: storage,
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 10000000 },
   fileFilter: function (req, file, cb) {
     checkFileType(file, allowedTypes, cb);
   },

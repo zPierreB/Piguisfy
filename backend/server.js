@@ -14,6 +14,7 @@ const corsOptions = {
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
+    exposedHeaders: ["set-cookie"],
 }
 
 app.use(express.static('public'))

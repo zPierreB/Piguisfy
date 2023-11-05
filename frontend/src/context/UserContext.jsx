@@ -1,17 +1,35 @@
 import { useState, createContext } from 'react'
 import axios from 'axios'
+import getCookie from '../utils/getCookie.js'
 
-const AuthContext = createContext()
+const UserContext = createContext()
 
-const AuthProvider = (props) => {
+const UserProvider = (props) => {
     const [isLogged, setIsLogged] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
 
-    const storeToken = (token) => {
-      localStorage.setItem('authToken', token)
+    const getUserData = async() => {
+      let axio = await axios.get('http://localhost:8000/getConnectedUser', {
+        headers: { Authorization: getCookie("Authorization") }
+      })
+
+      if (axio.status !== 200) {
+        setIsLogged(false);
+        setIsLoading(false);
+        setUser(null);
+        return false;
+      } else {
+        let response = await axio.data;
+        console.log('r', response)
+        setIsLogged(true);
+        setIsLoading(false);
+        setUser(response.user);
+        return true;
+      } 
     }
+        
 
     const authenticateUser = async() => {
       const storedToken = localStorage.getItem("authToken")
@@ -19,7 +37,7 @@ const AuthProvider = (props) => {
 
       if (storedToken) {
         await axios.get(`http://localhost:8000/verify`, {
-          headers: { Authorization: `Bearer ${storedToken}` },
+          headers: { Authorization: getCookie("Authorization") },
         })
           .then((response) => {
             const user = response.data;
@@ -40,22 +58,23 @@ const AuthProvider = (props) => {
           setUser(null);
           setToken(null);
         }
+        
       }
-
       return(
-        <AuthContext.Provider
+        <UserContext.Provider
             value={{
+            getUserData,
             isLogged,
             isLoading,
             user,
-            storeToken,
             authenticateUser,
             token
             }}
         >
             {props.children}
-        </AuthContext.Provider>
+        </UserContext.Provider>
       )
+          
 }
 
-export { AuthProvider, AuthContext }
+export { UserProvider, UserContext }

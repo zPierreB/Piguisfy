@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import IsAuth from './utils/isAuth.jsx'
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { UserContext } from "./context/UserContext.jsx";
 
 import './App.css'
 
@@ -11,11 +11,12 @@ import MySpace from './components/MySpace/MySpace.jsx'
 import NewSong from './components/MySpace/NewSong.jsx'
 import Logout from "./components/Login/Logout.jsx";
 import NewAlbum from "./components/MySpace/NewAlbum.jsx";
+import NewPlaylist from "./components/MySpace/NewPlaylist.jsx";
 
 
 function App() {
 
-  const { isLogged } = useContext(AuthContext);
+  const { isLogged } = useContext(UserContext);
 
   return (
     <div className='app'>
@@ -28,6 +29,7 @@ function App() {
         <Route exact path='/myspace' element={<IsAuth isLogged={isLogged}><MySpace /></IsAuth>} />
         <Route exact path='/myspace/addsong' element={<IsAuth isLogged={isLogged}><NewSong /></IsAuth>} />
         <Route exact path='/myspace/addalbum' element={<IsAuth isLogged={isLogged}><NewAlbum /></IsAuth>} />
+        <Route exact path='/myspace/addplaylist' element={<IsAuth isLogged={isLogged}><NewPlaylist /></IsAuth>} />
       </Routes>
     </div>
   )

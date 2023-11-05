@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
 import { findOneByEmail, findOneByUsernameAndEmail, createOneUser } from '../models/user.model.js'
+import getTokenFromHeaders from '../middleware/isAuthenticate.js'
 
 export const register = async (req, res) => {
   const { username, email, password, confirmPassword, dateOfBirth } = req.body
@@ -60,6 +61,9 @@ export const login = async (req, res) => {
           algorithm: "HS256",
           expiresIn: "6h",
         })
+        res.cookie("Authorization", `${authToken}`, {
+          httpOnly: false,
+        });
         res.status(200).json({ authToken: authToken })
       }
     })
@@ -67,12 +71,22 @@ export const login = async (req, res) => {
 }
 // TO DELETE BECAUSE USER IS CHECK IN MODEL
 export const verify = (req, res) => {
-  res.status(200).json(req.payload)
+  res.status(200).json({ message: 'User is authenticated.' })
 }
 
-export const logout = () => {
-  if(localStorage.getItem('authToken')) {
-      localStorage.removeItem('authToken')
+export const logout = (req, res) => {
+  const token = getTokenFromHeaders(req)
+  if(!token) {
+    return res.status(401).json({ message: 'No token provided.' })
+  } else {
+    return res.clearCookie('Authorization')
   }
 }
 
+export const getConnectedUserData = async (req, res) => {
+  if(req.user === undefined) {
+    return res.status(401).json({ message: 'No user connected.' })
+  }
+  res.status(200).json({ user: req.user });
+  return;
+}

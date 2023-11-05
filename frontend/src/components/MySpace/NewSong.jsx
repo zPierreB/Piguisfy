@@ -2,8 +2,9 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
 
-import { AuthContext } from '../../context/AuthContext.jsx'
+import { UserContext } from '../../context/UserContext.jsx'
 import getDuration from '../../utils/getDuration.js'
+import getCookie from '../../utils/getCookie.js';
 
 const NewSong = () => {
   const [file, setFile] = useState(null)
@@ -16,14 +17,14 @@ const NewSong = () => {
     getAlbums()
   }, [])
 
-  const { token } = useContext(AuthContext)
+  const { token } = useContext(UserContext)
 
   const navigate = useNavigate()
 
   const getAlbums = async() => {
 
     await axios.get('http://localhost:8000/myspace/albums', {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: getCookie("Authorization") },
     })
     .then((response) => {
       console.log(response.data)
@@ -43,7 +44,7 @@ const NewSong = () => {
     formData.append('album', selectedAlbumId)
 
     await axios.post('http://localhost:8000/myspace/addsong', formData, {
-      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
+      headers: { "Content-Type": "multipart/form-data", Authorization: getCookie("Authorization") },
     })
     .then((response) => {
       console.log(response.data)

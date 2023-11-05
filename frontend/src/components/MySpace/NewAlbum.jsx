@@ -1,16 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { AuthContext } from '../../context/AuthContext.jsx'
+import getCookie from '../../utils/getCookie.js';
 
 const NewAlbum = () => {
   const [name, setName] = useState('')
   const [releaseDate, setReleaseDate] = useState('')
   const [cover, setCover] = useState(null)
   const [errorMessage, setErrorMessage] = useState('')
-
-  const { token } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -23,7 +21,7 @@ const NewAlbum = () => {
     formData.append('image', cover)
   
     await axios.post('http://localhost:8000/myspace/addalbum', formData, {
-      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
+      headers: { "Content-Type": "multipart/form-data", Authorization: getCookie("Authorization") },
     })
     .then((response) => {
       console.log(response.data)

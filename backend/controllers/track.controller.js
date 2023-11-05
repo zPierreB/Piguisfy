@@ -1,7 +1,7 @@
 import { addOneTrack } from "../models/track.model.js";
 import { findOneAlbumByIdAndUserId } from "../models/album.model.js";
 
-export const add1Track = async (req, res, next) => {
+export const add1Track = async (req, res) => {
 
   // Check if the album exists and belongs to the user
   const album = await findOneAlbumByIdAndUserId([req.user.id, req.body.album])

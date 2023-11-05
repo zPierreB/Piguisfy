@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+
+import getCookie from '../../utils/getCookie.js'
 
 const Home = () => {
     const [playlists, setPlaylists] = useState([])
 
-    // const index = async () => {
-    //     const response = await axios.get('http://localhost:8000/playlists')
-    //     setPlaylists(response.data.playlists)
-    // }
+    const index = async () => {
+        const response = await axios.get('http://localhost:8000/myspace/playlists', {
+          headers: { Authorization: getCookie("Authorization") }
+        })
+        console.log(response.data)
+        setPlaylists(response.data)
+    }
+
+    useEffect(() => {
+      index()
+    }, [])
 
     return(
         <>
@@ -26,10 +35,11 @@ const Home = () => {
                   <Link to='/likedSongs'>Liked Songs</Link>
                 </li>
               </ul>
-              <h3>Playlists</h3>
+              <h3>Playlists <Link to='/myspace/addplaylist'>Add</Link></h3>
               <ul>
-                {playlists.map((playlist) => (
+                {playlists && playlists.map((playlist) => (
                   <li key={playlist.id}>
+                    <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name} cover`} width='50px' height='50px' />
                     <Link to={`/playlists/${playlist.id}`}>{playlist.name}</Link>
                   </li>
                 ))}

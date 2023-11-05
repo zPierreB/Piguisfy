@@ -5,7 +5,7 @@ export const getAllAlbumsByUser = async (req, res) => {
   const userId = req.user.id
 
   const albums = await findAllAlbumsByUserId([userId])
-  res.status(200).json(albums)
+  return res.status(200).json(albums)
 }
 
 export const add1Album = async (req, res) => {
@@ -18,7 +18,7 @@ export const add1Album = async (req, res) => {
     if(req.file.path === undefined) {
       return res.status(403).json({ message: "Please upload a file in mp3, wav or mpeg format" })
     }
-    const newPath = req.file.path.replace(/\\/g, "/")
+    const newPath = req.file.path.replace(/\\/g, "/").split('/')[1]
     
     await addOneAlbum([req.body.name, req.body.releaseDate, newPath, artist[0].id])
     .then((album) => {
