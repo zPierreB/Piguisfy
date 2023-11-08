@@ -1,7 +1,13 @@
 import dbConnect from '../controllers/db/index.js'
 
 export const findAllPlaylistsByUserId = async (arg) => {
-    const sql_string = 'SELECT playlists.* FROM playlists Where user_id = ?'
+    const sql_string = 'SELECT playlists.* FROM playlists WHERE user_id = ?'
+
+    return await dbConnect(sql_string, arg)
+}
+
+export const findOnePlaylistByIdAndUserId = async (arg) => {
+    const sql_string = 'SELECT playlists.* FROM playlists WHERE user_id = ? AND id = ? LIMIT 1'
 
     return await dbConnect(sql_string, arg)
 }

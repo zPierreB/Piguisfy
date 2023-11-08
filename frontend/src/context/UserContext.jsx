@@ -1,79 +1,48 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 import axios from 'axios'
 import getCookie from '../utils/getCookie.js'
 
 const UserContext = createContext()
 
 const UserProvider = (props) => {
-    const [isLogged, setIsLogged] = useState(false)
+    const [isLogged, setIsLogged] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
 
-    const getUserData = async() => {
-      let axio = await axios.get('http://localhost:8000/getConnectedUser', {
-        headers: { Authorization: getCookie("Authorization") }
-      })
+    const authenticateUser = async() => {
+      const currentToken = getCookie('TOKEN')
 
-      if (axio.status !== 200) {
-        setIsLogged(false);
-        setIsLoading(false);
-        setUser(null);
-        return false;
-      } else {
-        let response = await axio.data;
-        console.log('r', response)
+      console.log('currentToken', currentToken)
+      
+      await axios.get(`http://localhost:8000/verify`, {
+        Authorization: `Bearer ${currentToken}`,
+      })
+      .then((response) => {
         setIsLogged(true);
         setIsLoading(false);
-        setUser(response.user);
-        return true;
-      } 
+        setToken(currentToken);
+        console.log('response', response.data)
+      })
+      .catch((error) => {
+        setIsLogged(false);
+        setIsLoading(false);
+        setToken(null);
+      });
     }
-        
-
-    const authenticateUser = async() => {
-      const storedToken = localStorage.getItem("authToken")
-      console.log('test', storedToken);
-
-      if (storedToken) {
-        await axios.get(`http://localhost:8000/verify`, {
-          headers: { Authorization: getCookie("Authorization") },
-        })
-          .then((response) => {
-            const user = response.data;
-            setIsLogged(true);
-            setIsLoading(false);
-            setUser(user);
-            setToken(storedToken);
-          })
-          .catch((error) => {
-            setIsLogged(false);
-            setIsLoading(false);
-            setUser(null);
-            setToken(null);
-          });
-        } else {
-          setIsLogged(false);
-          setIsLoading(false);
-          setUser(null);
-          setToken(null);
-        }
-        
-      }
-      return(
-        <UserContext.Provider
-            value={{
-            getUserData,
+          
+    return(
+      <UserContext.Provider
+          value={{
             isLogged,
             isLoading,
-            user,
+            token,
             authenticateUser,
-            token
-            }}
-        >
-            {props.children}
-        </UserContext.Provider>
-      )
+          }}
+      >
+          {props.children}
+      </UserContext.Provider>
+    )
           
 }
 

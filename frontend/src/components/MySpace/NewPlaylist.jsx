@@ -14,6 +14,8 @@ const NewPlaylist = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = getCookie("TOKEN");
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("image", cover);
@@ -21,7 +23,7 @@ const NewPlaylist = () => {
     await axios.post("http://localhost:8000/myspace/addplaylist", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: getCookie("Authorization"),
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {

@@ -14,8 +14,7 @@ const isAuthenticated = async (req, res, next) => {
   jwt.verify(token, process.env.TOKEN_SECRET, async(err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized verify' });
-    }
-  
+    } 
     req.payload = decoded;
 
     const checkUser = await findOneByEmailAndId([req.payload.email, req.payload.id])
@@ -29,7 +28,7 @@ const isAuthenticated = async (req, res, next) => {
 
 function getTokenFromHeaders(req) {
   if (req.headers.authorization) {
-    const token = req.headers.authorization;
+    const token = req.headers.authorization.split(' ')[1];
     return token;
   }
 

@@ -11,10 +11,10 @@ const app = express()
 
 const corsOptions = {
     origin: CLIENT_URL,
+    exposedHeaders: ['Origin', 'X-Requested-With', 'Content', 'Accept', 'Content-Type', 'Authorization'],
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    exposedHeaders: ["set-cookie"],
+    preflightContinue: false
 }
 
 app.use(express.static('public'))

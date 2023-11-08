@@ -10,8 +10,6 @@ const LoginPage = () => {
     setIsRegisterForm(!isRegisterForm)
   }
 
-  console.log(isRegisterForm)
-
   return (
     <div className="main">
       <section className="loginRegisterModal">

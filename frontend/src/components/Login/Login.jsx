@@ -1,9 +1,12 @@
 import { useState, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
+import Cookies from 'universal-cookie'
 
 import { UserContext } from "../../context/UserContext"
 import getCookie from "../../utils/getCookie"
+
+const cookies = new Cookies()
 
 const Login = ({ changeForm }) => {
   const [email, setEmail] = useState('')
@@ -12,7 +15,7 @@ const Login = ({ changeForm }) => {
 
   const navigate = useNavigate()
 
-  const { getUserData, storeToken, authenticateUser } = useContext(UserContext)
+  const { authenticateUser } = useContext(UserContext)
 
   // getUserData()
 
@@ -24,11 +27,10 @@ const Login = ({ changeForm }) => {
     await axios.post('http://localhost:8000/login', params, {
       withCredentials: true
     })
-      .then(async (response) => {
-        // const jwt = response.data.authToken
+      .then(async(response) => {
+        cookies.set('TOKEN', response.data.authToken, { path: '/' })
 
-        // await storeToken(jwt)
-        // await authenticateUser()
+        await authenticateUser()
 
         navigate('/')
       })
@@ -38,17 +40,6 @@ const Login = ({ changeForm }) => {
         setErrorMessage(errorDescription);
       });
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      const monfion = await getUserData();
-      console.log("m=",monfion);
-      if(monfion) {
-        navigate("/");
-      }
-    }
-    fetchData();
-  }, [])
 
   return (
     <>

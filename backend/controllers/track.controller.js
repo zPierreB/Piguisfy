@@ -13,7 +13,7 @@ export const add1Track = async (req, res) => {
     if(req.file.path === undefined) {
       return res.status(403).json({ message: "Please upload a file in mp3, wav or mpeg format" })
     }
-    const newPath = req.file.path.replace(/\\/g, "/")
+    const newPath = req.file.path.replace(/\\/g, "/").split('/')[1]
     
     // Format the duration of the track in seconds
     const duration = Math.ceil(req.body.duration)

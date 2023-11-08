@@ -1,23 +1,16 @@
-import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
-import axios from 'axios';
-import getCookie from '../../utils/getCookie.js';
-
+// import getCookie from '../../utils/getCookie.js';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const Logout = () => {
 
   const logout = async() => {
-    await axios.get('http://localhost:8000/logout', {
-      headers: { Authorization: getCookie("Authorization") }
-    })
-    .then((response) => {
-      document.cookie("Authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;")
-    })
-    .catch((error) => {
-      console.log('error: ', error.response.data)
-    })
-    
+    await cookies.remove('TOKEN', { path: '/' })
+
+    window.location.reload()
   }
 
   useEffect(() => {
@@ -25,9 +18,9 @@ const Logout = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <Navigate to='/login' />
-    </div>
+    </>
   );
 };
 

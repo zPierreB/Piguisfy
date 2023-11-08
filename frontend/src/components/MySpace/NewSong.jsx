@@ -17,14 +17,14 @@ const NewSong = () => {
     getAlbums()
   }, [])
 
-  const { token } = useContext(UserContext)
-
   const navigate = useNavigate()
+
+  const token = getCookie('TOKEN')
 
   const getAlbums = async() => {
 
     await axios.get('http://localhost:8000/myspace/albums', {
-      headers: { Authorization: getCookie("Authorization") },
+      headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
       console.log(response.data)
@@ -44,7 +44,7 @@ const NewSong = () => {
     formData.append('album', selectedAlbumId)
 
     await axios.post('http://localhost:8000/myspace/addsong', formData, {
-      headers: { "Content-Type": "multipart/form-data", Authorization: getCookie("Authorization") },
+      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
     })
     .then((response) => {
       console.log(response.data)
@@ -58,6 +58,7 @@ const NewSong = () => {
   };
 
   const handleFileChange = async(e) => {
+    console.log(e.target.files[0])
     setFile(e.target.files[0])
     await getDuration(e.target.files[0])
     .then((duration) => {

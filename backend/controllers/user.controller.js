@@ -29,7 +29,7 @@ export const register = async (req, res) => {
       const salt = bcrypt.genSaltSync(10)
       const hashedPassword = bcrypt.hashSync(password, salt)
 
-      const newPath = req.file.path.replace(/\\/g, "/")
+      const newPath = req.file.path.replace(/\\/g, "/").split('/')[1]
 
       await createOneUser([username, email, hashedPassword, dateOfBirth, newPath])
       .then((user) => {
@@ -61,9 +61,9 @@ export const login = async (req, res) => {
           algorithm: "HS256",
           expiresIn: "6h",
         })
-        res.cookie("Authorization", `${authToken}`, {
-          httpOnly: false,
-        });
+        // res.cookie("TOKEN", `${authToken}`, {
+        //   httpOnly: false,
+        // });
         res.status(200).json({ authToken: authToken })
       }
     })
@@ -83,10 +83,10 @@ export const logout = (req, res) => {
   }
 }
 
-export const getConnectedUserData = async (req, res) => {
-  if(req.user === undefined) {
-    return res.status(401).json({ message: 'No user connected.' })
-  }
-  res.status(200).json({ user: req.user });
-  return;
-}
+// export const getConnectedUserData = async (req, res) => {
+//   if(req.user === undefined) {
+//     return res.status(401).json({ message: 'No user connected.' })
+//   }
+//   res.status(200).json({ user: req.user });
+//   // return;
+// }

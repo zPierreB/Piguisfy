@@ -15,13 +15,15 @@ const NewAlbum = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
 
+    const token = getCookie('TOKEN')
+
     const formData = new FormData()
     formData.append('name', name)
     formData.append('releaseDate', releaseDate)
     formData.append('image', cover)
   
     await axios.post('http://localhost:8000/myspace/addalbum', formData, {
-      headers: { "Content-Type": "multipart/form-data", Authorization: getCookie("Authorization") },
+      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
     })
     .then((response) => {
       console.log(response.data)
