@@ -20,9 +20,9 @@ const Home = () => {
   }, [])
 
   return(
-      <>
+      <div className='pageContainer'>
           
-      </>
+      </div>
   )
 }
 

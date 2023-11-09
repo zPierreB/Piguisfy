@@ -14,32 +14,31 @@ import NewPlaylist from "./components/MySpace/NewPlaylist.jsx";
 import Show1Playlist from "./components/MySpace/Show1Playlist.jsx";
 import Sidebar from "./components/Sidebar/Sidebar.jsx"
 
-import { UserContext } from "./context/UserContext.jsx"
-
-
 function App() {
-  const { isLogged } = useContext(UserContext)
-  console.log(isLogged)
+  
   return (
     <div className='app'>
-      <IsAuth>
-        <Sidebar />
-      </IsAuth>
-      <Routes>
-        <Route exact path='/login' element={<LoginPage />} />
-        <Route exact path='/logout' element={<Logout />} />
+      <div className="gridTemplate">
 
-        {/* PROTECTED ROUTES */}
-        <Route exact path='/' element={<IsAuth><Home /></IsAuth>} />
-        <Route exact path='/myspace' element={<IsAuth><MySpace /></IsAuth>} />
-        {/* SONGS ROUTES*/}
-        <Route exact path='/myspace/addsong' element={<IsAuth><NewSong /></IsAuth>} />
-        {/* ALBUMS ROUTES*/}
-        <Route exact path='/myspace/addalbum' element={<IsAuth><NewAlbum /></IsAuth>} />
-        {/* PLAYLISTS ROUTES*/}
-        <Route exact path="/myspace/playlist/:id" element={<IsAuth><Show1Playlist /></IsAuth>} />
-        <Route exact path='/myspace/addplaylist' element={<IsAuth><NewPlaylist /></IsAuth>} />
-      </Routes>
+      {/* <IsAuth>
+        <Sidebar />
+      </IsAuth> */}
+        <Routes>
+          <Route exact path='/login' element={<LoginPage />} />
+          <Route exact path='/logout' element={<Logout />} />
+      
+          {/* PROTECTED ROUTES */}
+          <Route exact path='/' element={<IsAuth><Sidebar /><Home /></IsAuth>} />
+          <Route exact path='/myspace' element={<IsAuth><Sidebar /><MySpace /></IsAuth>} />
+          {/* SONGS ROUTES*/}
+          <Route exact path='/myspace/addsong' element={<IsAuth><Sidebar /><NewSong /></IsAuth>} />
+          {/* ALBUMS ROUTES*/}
+          <Route exact path='/myspace/addalbum' element={<IsAuth><Sidebar /><NewAlbum /></IsAuth>} />
+          {/* PLAYLISTS ROUTES*/}
+          <Route exact path="/myspace/playlist/:id" element={<IsAuth><Sidebar /><Show1Playlist /></IsAuth>} />
+          <Route exact path='/myspace/addplaylist' element={<IsAuth><Sidebar /><NewPlaylist /></IsAuth>} />
+        </Routes>
+      </div>
     </div>
   )
 }

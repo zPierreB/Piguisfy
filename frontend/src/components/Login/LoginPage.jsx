@@ -11,7 +11,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="main">
+    <div className="formModalContainer">
       <section className="loginRegisterModal">
         {isRegisterForm ?
           <Register changeForm={changeForm} />

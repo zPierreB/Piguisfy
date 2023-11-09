@@ -14,6 +14,14 @@ body {
   color: #F4F4F4;
 }
 
+.gridTemplate {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
 .main {
   display: flex;
   justify-content: center;
@@ -31,6 +39,35 @@ body {
   background: rgb(22, 22, 22);
   background: linear-gradient(340deg, rgba(44, 44, 44, 1) 0%, rgba(44, 44, 44, 1) 60%, rgb(63, 63, 65) 100%);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 225px;
+  height: 100%;
+}
+
+.rightFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 225px;
+  height: 100%;
+}
+
+.formModalTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px 0;
 }
 
 .inputContainer {
@@ -55,6 +92,12 @@ input:-webkit-autofill:active {
   margin-bottom: 10px;
   color: #F4F4F4;
   caret-color: #F4F4F4;
+  height: 30px;
+  transition: ease-in-out 0.2s;
+}
+
+.inputContainer input:focus {
+  border-bottom: 2px solid #EEAE0A;
 }
 
 .inputContainer input[type="file"] {
@@ -107,8 +150,7 @@ input:-webkit-autofill:active {
 }
 
 .sidebarContainer {
-  position: fixed;
-  width: 300px;
+  grid-area: 1 / 1 / 7 / 2;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 }
@@ -156,6 +198,19 @@ input:-webkit-autofill:active {
   margin-right: 10px;
   border-radius: 10px;
   object-fit: cover;
+}
+
+.pageContainer {
+  grid-area: 1 / 2 / 7 / 3;
+  height: 100vh;
+}
+
+.formModalContainer {
+  grid-area: 1 / 2 / 7 / 3;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* .pulse {

@@ -43,7 +43,7 @@ const Login = ({ changeForm }) => {
 
   return (
     <>
-      <h1>Log In</h1>
+      <h1 className="formModalTitle">Log In</h1>
       <form onSubmit={handleSubmit}>
         <div className="inputContainer">
           <label htmlFor="email">Email</label>
