@@ -1,4 +1,4 @@
-import { addOneTrack } from "../models/track.model.js";
+import { addOneTrack, deleteOneTrack } from "../models/track.model.js";
 import { findOneAlbumByIdAndUserId } from "../models/album.model.js";
 
 export const add1Track = async (req, res) => {
@@ -23,5 +23,21 @@ export const add1Track = async (req, res) => {
       res.status(200).json({ message: 'Track added successfully.' })
     })
     .catch((error) => res.status(500).json({ message: 'Error during the creation of a music.' }))
+  }
+}
+
+export const delete1Track = async (req, res) => {
+  const userId = req.user.id
+  const trackId = req.params.id
+
+  const track = await findOneTrackByIdAndUserId([userId, trackId])
+  if(track.length < 1) {
+    return res.status(403).json({ message: "No track found" })
+  } else {
+    await deleteOneTrack([userId, trackId])
+    .then((track) => {
+      res.status(200).json({ message: 'Track deleted successfully.' })
+    })
+    .catch((error) => res.status(500).json({ message: 'Error during the deletion of a track.' }))
   }
 }

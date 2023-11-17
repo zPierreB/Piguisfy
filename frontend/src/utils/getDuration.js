@@ -13,6 +13,12 @@ async function getDuration(file) {
        return result
     };
   });
- }
+}
 
-export default getDuration;
+export function secondsToMinutesAndSeconds(duration) {
+  const minutes = Math.floor(duration / 60);
+  const seconds = Math.floor(duration - minutes * 60);
+  return `${minutes}:${seconds}`;
+}
+
+export default getDuration; secondsToMinutesAndSeconds;

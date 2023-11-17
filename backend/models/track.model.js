@@ -18,3 +18,9 @@ export const addOneTrack = async (arg) => {
 
     return await dbConnect(sql_string, arg)
 }
+
+export const deleteOneTrack = async (arg) => {
+    const sql_string = 'DELETE FROM tracks WHERE id = ?'
+
+    return await dbConnect(sql_string, arg)
+}

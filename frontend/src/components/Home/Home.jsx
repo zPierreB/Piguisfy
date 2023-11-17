@@ -9,10 +9,11 @@ const Home = () => {
   const token = getCookie('TOKEN')
 
   const index = async () => {
-    const response = await axios.get('http://localhost:8000/myspace/playlists', {
+    const response = await axios.get('http://localhost:8000/playlists', {
       headers: { Authorization: `Bearer ${token}` },
     })
     setPlaylists(response.data)
+    console.log(response.data)
   }
 
   useEffect(() => {
@@ -21,7 +22,25 @@ const Home = () => {
 
   return(
       <div className='pageContainer'>
-          
+        <h1>Piguisfy</h1>
+        <section className='homeList1Container'>
+          <div className='titleListContainer'>
+            <h2>Latest Playlists</h2>
+          </div>
+          <div className='playlistsContainer'>
+            {playlists.map((playlist, index) => (
+                <Link to={`/playlist/${playlist.id}`} key={index}>
+                  <div className='imgList1Container'>
+                    <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name} name`} />
+                  </div>
+                  <div className='textList1Container'>
+                    <h3>{playlist.name}</h3>
+                    <h3>Playlist</h3>
+                  </div>
+                </Link>
+            ))}
+          </div>
+        </section>
       </div>
   )
 }

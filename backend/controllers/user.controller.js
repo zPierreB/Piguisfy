@@ -61,9 +61,6 @@ export const login = async (req, res) => {
           algorithm: "HS256",
           expiresIn: "6h",
         })
-        // res.cookie("TOKEN", `${authToken}`, {
-        //   httpOnly: false,
-        // });
         res.status(200).json({ authToken: authToken })
       }
     })
@@ -83,10 +80,10 @@ export const logout = (req, res) => {
   }
 }
 
-// export const getConnectedUserData = async (req, res) => {
-//   if(req.user === undefined) {
-//     return res.status(401).json({ message: 'No user connected.' })
-//   }
-//   res.status(200).json({ user: req.user });
-//   // return;
-// }
+export const getConnectedUserData = async (req, res) => {
+  if(req.user === undefined) {
+    return res.status(401).json({ message: 'No user connected.' })
+  }
+  res.status(200).json({ user: req.user });
+  return;
+}
