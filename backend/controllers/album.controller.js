@@ -31,7 +31,6 @@ export const getOneAlbumByIdAndUserId = async (req, res) => {
   const albumId = req.params.id
 
   const album = await findOneAlbumByIdAndUserId([userId, albumId])
-  console.log(album)
   const tracks = await findAllTracksByAlbumId([albumId])
   return res.status(200).json({ album, tracks })
 }
