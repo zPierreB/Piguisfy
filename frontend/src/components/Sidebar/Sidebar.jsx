@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
 
 import getCookie from '../../utils/getCookie.js'
 
@@ -61,16 +61,6 @@ const Sidebar = () => {
                   </Link>
                 </div>
               </li>
-              {/* <li>
-                <div className='sidebar1Component'>
-                  <Link to='/likedSongs'>
-                    <div className='sidebarIconContainer'>
-                    <FontAwesomeIcon icon={faHeart} size='lg'/>
-                    </div>
-                    <h3>Liked Songs</h3>
-                  </Link>
-                </div>
-              </li> */}
             </ul>
           </section>
           <section>

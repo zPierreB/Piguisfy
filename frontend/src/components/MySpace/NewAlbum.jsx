@@ -26,8 +26,6 @@ const NewAlbum = () => {
       headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      console.log(response.data)
-
       navigate('/myspace')
     })
     .catch((error) => {
@@ -37,14 +35,13 @@ const NewAlbum = () => {
   }
 
   const handleCoverChange = (e) => {
-    console.log(e.target.files[0])
     setCover(e.target.files[0])
   }
 
   return(
     <div className='main'>
       <section className='loginRegisterModal'>
-        <h2>Add a new album</h2>
+        <h2 className="formModalTitle">Add a new album</h2>
         <form onSubmit={handleSubmit}>
           <div className='inputContainer'>
             <label htmlFor="name">Name of the album</label>

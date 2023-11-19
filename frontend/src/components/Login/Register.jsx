@@ -64,12 +64,12 @@ const Register = ({ changeForm }) => {
               <label htmlFor="password">Confirm Password</label>
               <input type="password" name="confirmPassword" id="confirmPassword" onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
+          </section>
+          <section className="rightFormContainer">
             <div className="inputContainer">
               <label htmlFor="dateOfBirth">Date of Birth</label>
               <input type="date" name="dateOfBirth" id="dateOfBirth" onChange={(e) => setDateOfBirth(e.target.value)}/>
             </div>
-          </section>
-          <section className="rightFormContainer">
             <div className="inputContainer">
               <label htmlFor="profilPicture">Profile Picture</label>
               <input type="file" name="profilPicture" id="profilPicture" onChange={handleFileChange}/>

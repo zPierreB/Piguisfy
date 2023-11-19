@@ -11,22 +11,16 @@ body {
   background-color: #170F43;
   background-size: cover;
   background-position: bottom;
+  background-attachment: fixed;
   color: #F4F4F4;
 }
 
 .gridTemplate {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-}
-
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
 
 .loginRegisterModal {
@@ -102,8 +96,7 @@ input:-webkit-autofill:active {
 
 .inputContainer input[type="file"] {
   border: none;
-  margin-bottom: 10px;
-  color: #F4F4F4;
+  height: 80px;
 }
 
 .inputContainer input[type="file"]::file-selector-button {
@@ -135,18 +128,48 @@ input:-webkit-autofill:active {
 
 .btnContainer {
   text-align: center;
-  margin-bottom: 30px;
 }
 
 .btnContainer button {
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
-  padding: 5px 20px;
-  margin-top: 20px;
+  padding: 8px 20px;
+  margin: 20px 5px 0;
   border-radius: 10px;
   border: none;
   background-color: #EEAE0A;
+}
+
+.btnContainer .cancelBtn {
+  background-color: #5e5e5e;
+}
+
+.btnContainerAdmin button {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #EEAE0A;
+}
+
+.btnContainerAdmin .cancelBtn {
+  background-color: #5e5e5e;
+}
+
+.btnContainerAdmin .addBtn {
+  background: linear-gradient(135deg, rgba(32,104,95,1) 0%, rgba(79,47,148,1) 50%, rgba(197,162,40,1) 100%);
+  color: #F4F4F4;
+  font-weight: 700;
+}
+
+.imgFormPreview {
+  width: 100px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .sidebarContainer {
@@ -165,6 +188,13 @@ input:-webkit-autofill:active {
 .sidebarNav {
   width: 230px;
   margin: 0 auto;
+}
+
+.mediaPlayerContainer {
+  grid-area: 4 / 3 / 6 / 3;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-right: 20px;
+  border-radius: 10px;
 }
 
 .userIconContainer {
@@ -211,30 +241,52 @@ input:-webkit-autofill:active {
 
 .homeList1Container {
   background: rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
-  border-radius: 10px;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.homeList1Container:first-child {
+  margin-top: 20px;
 }
 
 .titleListContainer {
   margin-bottom: 30px;
 }
 
+.titleListContainerAdmin {
+  display: flex;
+  justify-content: space-between;
+}
+
 .playlistsContainer {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr;
-  grid-column-gap: 40px;
-  grid-row-gap: 40px;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
   min-width: 350px;
 }
 
 .playlistsContainer a {
   text-decoration: none;
   color: #F4F4F4;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.oneCardContainer {
+  transition: ease-in-out 0.2s;
+  border-radius: 20px;
+}
+
+.oneCardContainer:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .textList1Container {
   margin-top: 8px;
+  padding: 0px 15px 10px;
 }
 
 .textList1Container h3 {
@@ -252,6 +304,7 @@ input:-webkit-autofill:active {
   width: 100%;
   max-width: 180px;
   background-size: cover;
+  padding: 10px 10px 0;
 }
 
 .imgList1Container img {
@@ -318,6 +371,59 @@ input:-webkit-autofill:active {
 .pageContainer {
   grid-area: 1 / 2 / 7 / 3;
   height: 100vh;
+  display: flex;
+  flex-flow: column;
+  row-gap: 20px;
+}
+
+.mainTitle {
+  margin: 50px 0 20px 50px;
+  margin-top: 50px;
+  margin-left: 50px;
+  font-size: 40px;
+}
+
+.show1PlaylistOrAlbumHeader {
+  display: flex;
+  margin-top: 30px;
+}
+
+.show1PlaylistOrAlbumImage {
+  margin-left: 30px;
+  width: 240px;
+  aspect-ratio: 1/1;
+  max-width: 240px;
+  background-size: cover;
+}
+
+.show1PlaylistOrAlbumImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.show1PlaylistOrImageText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 40px;
+  letter-spacing: 1px;
+}
+
+.show1PlaylistOrImageText h3 {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.show1PlaylistOrImageText h2 {
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.show1PlaylistOrAlbumIcons {
+  display: flex;
 }
 
 .formModalContainer {
@@ -365,12 +471,34 @@ input:-webkit-autofill:active {
   width: 90px;
 }
 
-.trackPlaylistCell:nth-child(5) article {
+.trackPlaylistCell:nth-child(5) {
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+  align-items: center;
 }
 
 .trackPlaylistTitle {
   font-weight: 600;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  white-space: unset;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.iconContainerHeader {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 8px;
+  background: rgb(104, 32, 32);
+  width: 32px;
+  height: 32px;
+  transition: ease-in-out 0.2s;
+  margin-right: 10px;
+  &:hover {
+    background: rgb(175, 54, 54);
+    cursor: pointer;
+  }
 }

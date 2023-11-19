@@ -1,11 +1,13 @@
 import { useState ,useEffect } from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 import getCookie from '../../utils/getCookie.js'
 import { secondsToMinutesAndSeconds } from '../../utils/getDuration.js'
+
 
 const Show1Playlist = () => {
   const [playlist, setPlaylist] = useState([])
@@ -13,14 +15,14 @@ const Show1Playlist = () => {
   const token = getCookie('TOKEN')
   let { id } = useParams()
   const location = useLocation()
-
+  const navigate = useNavigate()
+  
   const index = async () => {
     const response = await axios.get(`http://localhost:8000/myspace/playlist/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     setPlaylist(response.data.playlist[0])
     setTracks(response.data.tracks)
-    console.log(response.data)
   }
 
   const delete1Track = async (trackId) => {
@@ -30,19 +32,41 @@ const Show1Playlist = () => {
     window.location.reload()
   }
 
+  const delete1Playlist = async () => {
+    const formData = new FormData()
+    formData.append('image', playlist.image)
+
+    await axios.post(`http://localhost:8000/myspace/playlist/${id}`, formData, {
+      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
+    })
+    navigate('/myspace')
+  }
+
   useEffect(() => {
     index()
   }, [location])
 
   return (
-    <div>
-      <section>
-        <h1>Show1Playlist</h1>
-        <h2>{playlist.name}</h2>
-        <FontAwesomeIcon icon={faPenToSquare} />
-        <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name}`} width='50px' height='50px'/>
-      </section>
-      <section>
+    <div className='pageContainer'>
+      <section className='homeList1Container'>
+        <div className='show1PlaylistOrAlbumHeader'>
+          <div className='show1PlaylistOrAlbumImage'>
+            <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name}`} />
+          </div>
+          <div className='show1PlaylistOrImageText'>
+            <h3>Playlist</h3>
+            <h2>{playlist.name}</h2>
+            <h3>{moment(playlist.created_at, ).format("YYYY")}<br />{tracks.length} titres</h3>
+            <div className='show1PlaylistOrAlbumIcons'>
+              <article className='iconContainerHeader'>
+                <FontAwesomeIcon icon={faPenToSquare} onClick={() => navigate(`/myspace/playlist/${playlist.id}/edit`)}/>
+              </article>
+              <article className='iconContainerHeader'>
+                <FontAwesomeIcon icon={faTrashCan} onClick={() => delete1Playlist(playlist.id)}/>
+              </article>
+            </div>
+          </div>
+        </div>
         <li className='trackPlaylistHeader'>
           <div className='trackPlaylistCell'>
             <p>#</p>
@@ -57,8 +81,6 @@ const Show1Playlist = () => {
             <p>DURATION</p>
           </div>
         </li>
-      </section>
-      <section>
         <ul>
           {tracks.map((track, index) => (
             <li key={index} className='trackPlaylistRow'>
@@ -76,8 +98,7 @@ const Show1Playlist = () => {
                 <p>{secondsToMinutesAndSeconds(track.duration)}</p>
               </div>
               <div className='trackPlaylistCell'>
-                <article>
-                  <p>edit</p>
+                <article className='iconContainerHeader'>
                   <FontAwesomeIcon icon={faTrashCan} onClick={() => delete1Track(track.id)}/>
                 </article>
               </div>

@@ -6,6 +6,12 @@ export const findAllTracks = async (arg) => {
     return await dbConnect(sql_string, arg)
 }
 
+export const findAllTracksByAlbumId = async(arg) => {
+    const sql_string = 'SELECT tracks.*, artists.artist_name AS artist_name FROM tracks JOIN albums ON tracks.album_id = albums.id JOIN artists ON albums.artist_id = artists.id WHERE album_id = ?'
+
+    return await dbConnect(sql_string, arg)
+}
+
 export const findOneTrack = async (arg) => {
     const sql_string = 'SELECT * FROM tracks WHERE name = ?'
 
