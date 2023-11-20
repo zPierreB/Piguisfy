@@ -17,8 +17,6 @@ const Login = ({ changeForm }) => {
 
   const { authenticateUser } = useContext(UserContext)
 
-  // getUserData()
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 

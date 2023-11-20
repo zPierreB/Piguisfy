@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 
@@ -11,6 +11,7 @@ const Sidebar = () => {
   const [user, setUser] = useState(null)
 
   const token = getCookie('TOKEN')
+  const navigate = useNavigate()
 
   let urls = [
     'http://localhost:8000/myspace/playlists',
@@ -45,6 +46,9 @@ const Sidebar = () => {
           </div>
         </Link>
         <h3 className='usernameContainer'>{user && user.username}</h3>
+        <div className="btnContainer">
+          <button className='cancelBtn' onClick={() => navigate('/logout')}>Log out</button>
+        </div>
       </section>
       <div>
         <nav className='sidebarNav'>

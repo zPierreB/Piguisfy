@@ -7,13 +7,15 @@ const UserContext = createContext()
 const UserProvider = (props) => {
     const [isLogged, setIsLogged] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
+    const [currentTrack, setCurrentTrack] = useState(null)
+
+    const changeCurrentTrack = (track) => {
+      setCurrentTrack(track)
+    }
 
     const authenticateUser = async() => {
       const currentToken = getCookie('TOKEN')
-
-      console.log('currentToken', currentToken)
       
       await axios.get(`http://localhost:8000/verify`, {
         Authorization: `Bearer ${currentToken}`,
@@ -22,7 +24,6 @@ const UserProvider = (props) => {
         setIsLogged(true);
         setIsLoading(false);
         setToken(currentToken);
-        console.log('response', response.data)
       })
       .catch((error) => {
         setIsLogged(false);
@@ -38,6 +39,8 @@ const UserProvider = (props) => {
             isLoading,
             token,
             authenticateUser,
+            currentTrack,
+            changeCurrentTrack
           }}
       >
           {props.children}

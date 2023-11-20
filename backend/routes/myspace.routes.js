@@ -3,7 +3,7 @@ const router = express.Router()
 
 import { add1Track, delete1Track } from '../controllers/track.controller.js'
 import { getAllAlbumsByUser, add1Album, delete1AlbumById, update1Album, getOneAlbumByIdAndUserId } from '../controllers/album.controller.js'
-import { delete1TrackFrom1Playlist } from '../controllers/playlist-track.controller.js'
+import { add1TrackToPlaylist, delete1TrackFrom1Playlist } from '../controllers/playlist-track.controller.js'
 import { getAllPlaylistsByUserId, add1Playlist, delete1Playlist, update1Playlist, getOnePlaylistByIdAndUserId } from '../controllers/playlist.controller.js'
 
 import isAuthenticated from '../middleware/isAuthenticate.js'
@@ -26,6 +26,8 @@ router.post('/addplaylist',  isAuthenticated, uploadImage, add1Playlist)
 router.put('/playlist/:id', isAuthenticated, uploadImage, update1Playlist)
 router.post('/playlist/:id', isAuthenticated, delete1Playlist)
 
-router.delete('/delete-one-song/:id', isAuthenticated, delete1Track)
+router.post('/playlist/:id/addtrack/:trackId', isAuthenticated, add1TrackToPlaylist)
+
+// router.delete('/delete-one-song/:id', isAuthenticated, delete1Track)
 
 export default router

@@ -2,7 +2,7 @@ import { addOneTrackToPlaylist, deleteOneTrackFromPlaylist } from '../models/pla
 
 export const add1TrackToPlaylist = async (req, res) => {
   const playlistId = req.params.id
-  const trackId = req.body.trackId
+  const trackId = req.params.trackId
 
   await addOneTrackToPlaylist([playlistId, trackId])
   .then((track) => {

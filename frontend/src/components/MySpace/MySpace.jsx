@@ -51,40 +51,48 @@ const MySpace = () => {
           </div>
         </div>
         <div className='playlistsContainer'>
-            {playlists.map((playlist, index) => (
-                <Link to={`/myspace/playlist/${playlist.id}`} key={index} className='oneCardContainer'>
-                  <div className='imgList1Container'>
-                    <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name} name`} />
-                  </div>
-                  <div className='textList1Container'>
-                    <h3>{playlist.name}</h3>
-                    <h3>Playlist</h3>
-                  </div>
-                </Link>
-            ))}
-          </div>
+          {playlists.map((playlist, index) => (
+            <Link to={`/myspace/playlist/${playlist.id}`} key={index} className='oneCardContainer'>
+              <div className='imgList1Container'>
+                <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name} name`} />
+              </div>
+              <div className='textList1Container'>
+                <h3>{playlist.name}</h3>
+                <h3>Playlist</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
       <section className='homeList1Container'>
-          <div className='titleListContainer'>
-            <h2>My Albums</h2>
+        <div className='titleListContainerAdmin'>
+          <h2>My Albums</h2>
+          <div className="btnContainerAdmin">
+            <button className='addBtn' onClick={() => navigate('/myspace/addalbum')}>Add <FontAwesomeIcon icon={faCirclePlus} /></button>
           </div>
-          <div className='playlistsContainer'>
-            {albums.map((album, index) => (
-                <Link to={`/myspace/album/${album.id}`} key={index} className='oneCardContainer'>
-                  <div className='imgList1Container'>
-                    <img src={`http://localhost:8000/${album.image}`} alt={`${album.name} name`} />
-                  </div>
-                  <div className='textList1Container'>
-                    <h3>{album.name}</h3>
-                    <h3>Album</h3>
-                  </div>
-                </Link>
-            ))}
+        </div>
+        <div className='playlistsContainer'>
+          {albums.map((album, index) => (
+            <Link to={`/myspace/album/${album.id}`} key={index} className='oneCardContainer'>
+              <div className='imgList1Container'>
+                <img src={`http://localhost:8000/${album.image}`} alt={`${album.name} name`} />
+              </div>
+              <div className='textList1Container'>
+                <h3>{album.name}</h3>
+                <h3>Album</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className='homeList1Container'>
+        <div className='titleListContainerAdmin'>
+          <h2>My Songs</h2>
+          <div className="btnContainerAdmin">
+            <button className='addBtn' onClick={() => navigate('/myspace/addsong')}>Add <FontAwesomeIcon icon={faCirclePlus} /></button>
           </div>
-        </section>
-        <Link to='/myspace/addsong'>Publier une nouvelle chanson!</Link><br/>
-        <Link to='/myspace/addalbum'>Publier un nouvel album!</Link><br/>
-        <Link to='/logout'>Log out</Link><br/>
+        </div>
+      </section>
     </div>
   );
 }

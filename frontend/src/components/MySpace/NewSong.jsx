@@ -1,8 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
 
-import { UserContext } from '../../context/UserContext.jsx'
 import getDuration from '../../utils/getDuration.js'
 import getCookie from '../../utils/getCookie.js';
 
@@ -22,7 +21,6 @@ const NewSong = () => {
   const token = getCookie('TOKEN')
 
   const getAlbums = async() => {
-
     await axios.get('http://localhost:8000/myspace/albums', {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -58,7 +56,6 @@ const NewSong = () => {
   };
 
   const handleFileChange = async(e) => {
-    console.log(e.target.files[0])
     setFile(e.target.files[0])
     await getDuration(e.target.files[0])
     .then((duration) => {
@@ -81,7 +78,7 @@ const NewSong = () => {
           <div className='inputContainer'>
             <label htmlFor='album'>Album</label>
             <select name='album' onChange={(e) => setSelectedAlbumId(e.target.value)}>
-              <option defaultValue="none" disabled>Select an album</option>
+              <option defaultValue="none" disabled selected >Select an album</option>
               {albums.map((album, index) => {
                 return <option key={index} value={album.id}>{album.name}</option>
               })}
