@@ -38,7 +38,6 @@ const Playlist = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      console.log(response.data)
       setPlaylists(response.data)
     })
     .catch((error) => {

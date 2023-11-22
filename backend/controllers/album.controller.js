@@ -103,7 +103,6 @@ export const delete1AlbumById = async (req, res) => {
           console.log('err: ', err)
           return
         }
-        console.log('file deleted successfully')
       })
       res.status(200).json({ message: 'Album deleted successfully.' })
     })

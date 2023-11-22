@@ -16,21 +16,21 @@ const MediaPlayer = () => {
 
   const handlePlayPause = () => {
     if (isPlaying) {
-      audioRef.current.pause()
+      audioRef?.current.pause()
       setIsPlaying(false)
     } else {
-      audioRef.current.play()
+      audioRef?.current.play()
       setIsPlaying(true)
     }
   }
 
   const onChangeTrack = () => {
     if (currentTrack) {
-      audioRef.current.load()
-      audioRef.current.play()
+      audioRef?.current.load()
+      audioRef?.current.play()
       setIsPlaying(true)
     } else {
-      audioRef.current.pause()
+      audioRef?.current?.pause()
       setIsPlaying(false)
     }
   }
@@ -54,26 +54,30 @@ const MediaPlayer = () => {
   }, [currentTrack])
   
   return (
-    <div className="mediaPlayerContainer">
+    <>
+    {currentTrack &&
+      <div className="mediaPlayerContainer">
       <DisplayTrack
-        currentTrack={currentTrack}
-        audioRef={audioRef}
-        isPlaying={isPlaying}
-        onEnded={onEnded}
+      currentTrack={currentTrack}
+      audioRef={audioRef}
+      isPlaying={isPlaying}
+      onEnded={onEnded}
       />
       <Controls
-        handlePlayPause={handlePlayPause}
-        isPlaying={isPlaying}
-        audioRef={audioRef}
+      handlePlayPause={handlePlayPause}
+      isPlaying={isPlaying}
+      audioRef={audioRef}
       />
       <ProgressBar
-        currentTrack={currentTrack}
-        handleSeek={handleSeek}
-        audioRef={audioRef}
-        handleTimeUpdate={handleTimeUpdate}
-        currentTime={currentTime}
+      currentTrack={currentTrack}
+      handleSeek={handleSeek}
+      audioRef={audioRef}
+      handleTimeUpdate={handleTimeUpdate}
+      currentTime={currentTime}
       />
-    </div>
+      </div>
+    }
+    </>
   )
 }
 

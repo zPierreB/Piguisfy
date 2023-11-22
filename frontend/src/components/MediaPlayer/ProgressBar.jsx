@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 
 const ProgressBar = ({ currentTrack, handleSeek, audioRef, handleTimeUpdate, currentTime }) => {
-  const [volume, setVolume] = useState(30);
+  const [volume, setVolume] = useState(10);
 
   const formatDuration = (duration) => {
     if (duration) {

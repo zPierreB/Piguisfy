@@ -15,7 +15,6 @@ export const register = async (req, res) => {
 
   await findOneByUsernameAndEmail([username, email])
   .then(async(user) => {
-    console.log('user', user)
     if(user.length > 0) {
       res.status(400).json({ message: 'Username or email is already taken.' })
       return
@@ -84,6 +83,7 @@ export const getConnectedUserData = async (req, res) => {
   if(req.user === undefined) {
     return res.status(401).json({ message: 'No user connected.' })
   }
+  delete req.user.password
   res.status(200).json({ user: req.user });
   return;
 }

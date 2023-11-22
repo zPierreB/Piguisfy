@@ -32,7 +32,12 @@ const Playlist = () => {
     await axios.delete(`http://localhost:8000/myspace/album/${id}/track/${trackId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    window.location.reload()
+    .then((response) => {
+      navigate(`/myspace/album/${id}`)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
   const delete1Album = async () => {

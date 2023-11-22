@@ -8,7 +8,7 @@ const Controls = ({ handlePlayPause, isPlaying }) => {
   return(
     <div className="controlsBtnContainer">
       <button className="playBtn" onClick={handlePlayPause}>
-        {isPlaying ? <FontAwesomeIcon icon={faPause} size="lg"/> : <FontAwesomeIcon icon={faPlay} size="lg"/>}
+        {isPlaying ? <FontAwesomeIcon icon={faPause} size="2x"/> : <FontAwesomeIcon icon={faPlay} size="2x"/>}
       </button>
     </div>
   )

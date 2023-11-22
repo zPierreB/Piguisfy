@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 
 import getCookie from '../../utils/getCookie.js'
+import HamburgerIcon from './HamburgerIcon.jsx'
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState([])
   const [user, setUser] = useState(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const token = getCookie('TOKEN')
   const navigate = useNavigate()
@@ -33,14 +35,20 @@ const Sidebar = () => {
     })
   }
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
   useEffect(() => {
     index();
   }, [])
 
   return(
-    <div className='sidebarContainer'>
-      <section className='userIconContainer'>
-        <Link to='/myspace'>
+    
+    <div className={`sidebarContainer`}>
+      <HamburgerIcon toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}/>
+      <section className={`userIconContainer ${isSidebarOpen ? 'headerNavMobile' : ''}`}>
+        <Link to='/myspace' onClick={() => toggleSidebar()}>
           <div className='iconContainer'>
             <img src={`http://localhost:8000/${user && user.profil_pic}`} alt={`${user && user.name} profile picture`} />
           </div>
@@ -49,8 +57,27 @@ const Sidebar = () => {
         <div className="btnContainer">
           <button className='cancelBtn' onClick={() => navigate('/logout')}>Log out</button>
         </div>
+        <span className='seperateBar'></span>
+        <div className='menuLinkMobile'>
+          <ul>
+            <li>
+              <div className='sidebar1RowNavMobile'>
+                <Link to='/' onClick={() => toggleSidebar()}>
+                  <h3>Home</h3>
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className='sidebar1RowNavMobile'>
+                <Link to='/logout' onClick={() => toggleSidebar()}>
+                  <h3>Logout</h3>
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </section>
-      <div>
+      <div className='listMenu'>
         <nav className='sidebarNav'>
           <section>
             <h3 className='sidebarTitle'>Menu</h3>

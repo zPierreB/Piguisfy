@@ -49,7 +49,6 @@ const Edit1Playlist = () => {
     })
       .then((response) => {
         navigate("/myspace");
-        window.location.reload();
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

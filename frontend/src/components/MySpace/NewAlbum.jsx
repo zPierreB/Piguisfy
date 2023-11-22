@@ -39,7 +39,7 @@ const NewAlbum = () => {
   }
 
   return(
-    <div className='main'>
+    <div className="formModalContainer">
       <section className='loginRegisterModal'>
         <h2 className="formModalTitle">Add a new album</h2>
         <form onSubmit={handleSubmit}>
@@ -55,10 +55,10 @@ const NewAlbum = () => {
             <label htmlFor='image'>Cover</label>
             <input type='file' name='image' id='' onChange={handleCoverChange}/>
           </div>
-          <div>
+          <div className='btnContainer'>
             <p>{errorMessage}</p>
-            <Link to='/myspace'>Cancel</Link>
-            <button type="submit">Create a song</button>
+            <button className='cancelBtn' type="button" onClick={() => navigate('/myspace')}>Cancel</button>
+            <button type="submit">Create</button>
           </div>
         </form>
       </section>

@@ -27,8 +27,6 @@ const NewPlaylist = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-
         navigate("/myspace");
       })
       .catch((error) => {
@@ -38,14 +36,13 @@ const NewPlaylist = () => {
   };
 
   const handleCoverChange = (e) => {
-    console.log(e.target.files[0]);
     setCover(e.target.files[0]);
   };
 
   return (
-    <div className="main">
+    <div className="formModalContainer">
       <section className="loginRegisterModal">
-        <h2>Add a new playlist</h2>
+        <h2 className="formModalTitle">Add a new playlist</h2>
         <form onSubmit={handleSubmit}>
           <div className="inputContainer">
             <label htmlFor="name">Name of the playlist</label>
@@ -65,12 +62,12 @@ const NewPlaylist = () => {
               onChange={handleCoverChange}
             />
           </div>
-          <div className="inputContainer">
+          <div className='btnContainer'>
             <p>{errorMessage}</p>
-            <button type="submit">Create a playlist</button>
+            <button className='cancelBtn' type="button" onClick={() => navigate('/myspace')}>Cancel</button>
+            <button type="submit">Create</button>
           </div>
         </form>
-        <Link to="/myspace">Go back</Link>
       </section>
     </div>
   );

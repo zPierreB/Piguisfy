@@ -27,9 +27,7 @@ const Register = ({ changeForm }) => {
     await axios.post('http://localhost:8000/register', formData, {
       headers: { "Content-Type": "multipart/form-data" }
     })
-      .then(async (response) => {
-        console.log(response.data)
-
+      .then((response) => {
         navigate('/login')
       })
       .catch((error) => {

@@ -58,7 +58,6 @@ const MySpace = () => {
               </div>
               <div className='textList1Container'>
                 <h3>{playlist.name}</h3>
-                <h3>Playlist</h3>
               </div>
             </Link>
           ))}
@@ -79,7 +78,6 @@ const MySpace = () => {
               </div>
               <div className='textList1Container'>
                 <h3>{album.name}</h3>
-                <h3>Album</h3>
               </div>
             </Link>
           ))}

@@ -10,7 +10,6 @@ const DisplayTrack = ({ currentTrack, audioRef, isPlaying, onEnded }) => {
         <p>{currentTrack?.artist_name}</p>
       </div>
       <audio src={`http://localhost:8000/${currentTrack?.path}`} ref={audioRef} onEnded={onEnded}controls />
-      <p></p>
     </>
   )
 }

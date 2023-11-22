@@ -25,7 +25,6 @@ const NewSong = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      console.log(response.data)
       setAlbums(response.data)
     })
     .catch((error) => {
@@ -45,8 +44,6 @@ const NewSong = () => {
       headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      console.log(response.data)
-
       navigate('/myspace')
     })
     .catch((error) => {
@@ -67,9 +64,9 @@ const NewSong = () => {
   }
 
   return(
-    <div className='main'>
+    <div className='formModalContainer'>
       <section className='loginRegisterModal'>
-      <h2>Add a new song</h2>
+      <h2 className="formModalTitle">Add a new song</h2>
         <form onSubmit={handleSubmit}>
           <div className='inputContainer'>
             <label htmlFor='path'>File</label>
@@ -86,8 +83,8 @@ const NewSong = () => {
           </div>
           <div className='btnContainer'>
             <p>{errorMessage}</p>
-            <Link to='/myspace'>Cancel</Link>
-            <button type="submit">Create a song</button>
+            <button className='cancelBtn' type="button" onClick={() => navigate('/myspace')}>Cancel</button>
+            <button type="submit">Create</button>
           </div>
         </form>
       </section>

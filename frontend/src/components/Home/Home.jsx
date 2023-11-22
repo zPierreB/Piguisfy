@@ -47,8 +47,8 @@ const Home = () => {
                     <img src={`http://localhost:8000/${playlist.image}`} alt={`${playlist.name} name`} />
                   </div>
                   <div className='textList1Container'>
-                    <h3>{playlist.name}</h3>
-                    <h3>Playlist</h3>
+                    <h3 className='trackPlaylistTitle'>{playlist.name}</h3>
+                    <h3 className='trackPlaylistTitle'>Playlist</h3>
                   </div>
                 </Link>
             ))}
@@ -65,8 +65,8 @@ const Home = () => {
                     <img src={`http://localhost:8000/${album.image}`} alt={`${album.name} name`} />
                   </div>
                   <div className='textList1Container'>
-                    <h3>{album.name}</h3>
-                    <h3>Album</h3>
+                    <h3 className='trackPlaylistTitle'>{album.name}</h3>
+                    <h3 className='trackPlaylistTitle'>Album</h3>
                   </div>
                 </Link>
             ))}

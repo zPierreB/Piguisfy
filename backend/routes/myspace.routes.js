@@ -16,6 +16,7 @@ router.get('/album/:id', isAuthenticated, getOneAlbumByIdAndUserId)
 router.post('/addalbum',  isAuthenticated, uploadImage, add1Album)
 router.put('/album/:id', isAuthenticated, uploadImage, update1Album)
 router.delete('/album/:id', isAuthenticated, delete1AlbumById)
+router.delete('/album/:id/track/:trackId', isAuthenticated, delete1Track)
 
 router.post('/addsong',  isAuthenticated, uploadAudio, add1Track)
 router.delete('/playlist/:id/track/:trackId', isAuthenticated, delete1TrackFrom1Playlist)

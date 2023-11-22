@@ -1,15 +1,14 @@
-import { addOneTrack, deleteOneTrack } from "../models/track.model.js";
+import { addOneTrack, deleteOneTrack, findOneTrackById } from "../models/track.model.js";
 import { findOneAlbumByIdAndUserId } from "../models/album.model.js";
+import fs from 'fs'
 
 import splitFirstOccurrence from '../utils/splitFirstOccurence.js'
 
 export const add1Track = async (req, res) => {
-  console.log('req.body: ', req.body)
-  console.log('req.user: ', req.user)
 
   // Check if the album exists and belongs to the user
   const album = await findOneAlbumByIdAndUserId([req.user.id, req.body.album])
-  console.log('album: ', album)
+
   if(album.length < 1) {
     return res.status(403).json({ message: "There's no file provided." })
   } else {
@@ -32,17 +31,27 @@ export const add1Track = async (req, res) => {
 }
 
 export const delete1Track = async (req, res) => {
-  const userId = req.user.id
-  const trackId = req.params.id
+  const albumId = req.params.id
+  const trackId = req.params.trackId
 
-  const track = await findOneTrackByIdAndUserId([userId, trackId])
-  if(track.length < 1) {
+  const trackFound = await findOneTrackById([trackId])
+
+  if(trackFound.length < 1) {
     return res.status(403).json({ message: "No track found" })
   } else {
-    await deleteOneTrack([userId, trackId])
+    await deleteOneTrack([trackId, albumId])
     .then((track) => {
+      fs.unlink(`./public/${trackFound[0].path}`, (err) => {
+        if(err) {
+          console.log('err: ', err)
+          return
+        }
+      })
       res.status(200).json({ message: 'Track deleted successfully.' })
     })
-    .catch((error) => res.status(500).json({ message: 'Error during the deletion of a track.' }))
+    .catch((error) => {
+      console.log(error)
+      res.status(500).json({ message: 'Error during the deletion of a track.' })
+    })
   }
 }

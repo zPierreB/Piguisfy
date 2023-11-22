@@ -33,7 +33,7 @@ const Show1Playlist = () => {
     await axios.delete(`http://localhost:8000/myspace/playlist/${id}/track/${trackId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    window.location.reload()
+    navigate(`/myspace/playlist/${id}`)
   }
 
   const delete1Playlist = async () => {

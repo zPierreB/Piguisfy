@@ -95,7 +95,6 @@ export const delete1Playlist = async (req, res) => {
         console.log('err: ', err)
         return
       }
-      console.log('file deleted successfully')
     })
     res.status(200).json({ message: 'Playlist deleted successfully.' })
   })

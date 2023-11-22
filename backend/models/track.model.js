@@ -12,8 +12,8 @@ export const findAllTracksByAlbumId = async(arg) => {
     return await dbConnect(sql_string, arg)
 }
 
-export const findOneTrack = async (arg) => {
-    const sql_string = 'SELECT * FROM tracks WHERE name = ?'
+export const findOneTrackById = async (arg) => {
+    const sql_string = 'SELECT * FROM tracks WHERE id = ? LIMIT 1';
 
     return await dbConnect(sql_string, arg)
 }
@@ -26,7 +26,7 @@ export const addOneTrack = async (arg) => {
 }
 
 export const deleteOneTrack = async (arg) => {
-    const sql_string = 'DELETE FROM tracks WHERE id = ?'
+    const sql_string = 'DELETE FROM tracks WHERE id = ? AND album_id = ?';
 
     return await dbConnect(sql_string, arg)
 }
