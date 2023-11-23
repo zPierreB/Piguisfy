@@ -1,61 +1,64 @@
-import { useState, useContext } from "react"
-import { redirect, useNavigate } from "react-router-dom"
+import { useState, useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios'
+import Cookies from 'universal-cookie'
 
-import { AuthContext } from "../../context/AuthContext"
+import { UserContext } from "../../context/UserContext"
+import getCookie from "../../utils/getCookie"
 
-const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+const cookies = new Cookies()
 
-    const navigate = useNavigate()
+const Login = ({ changeForm }) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-    const { storeToken, authenticateUser } = useContext(AuthContext)
-    
-    const handleSubmit = async(e) => {
-        e.preventDefault()
+  const navigate = useNavigate()
 
-        const params = { email, password }
-       
-        await axios.post('http://localhost:8000/login', params)
-        .then(async(response) => {
-            const jwt = response.data.authToken
+  const { authenticateUser } = useContext(UserContext)
 
-            await storeToken(jwt)
-            await authenticateUser()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-            navigate('/')
-            console.log('alors on danse?')
-        })
-        .catch((error) => {
-            const errorDescription = error.response.data.message;
-            console.log("error loggin in...", errorDescription);
-            setErrorMessage(errorDescription);
-        });
-    }
-    
-    return(
-      <div className="main">
-        <section className="loginRegisterModal">
-          <h1>Log In</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="inputContainer">
-              <label htmlFor="email">Email</label>
-              <input type="text" name="email" id="" onChange={(e) => setEmail(e.target.value)}/>
-            </div>
-            <div className="inputContainer">
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="" onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <div>
-              <p>{errorMessage}</p>
-              <button type="submit">Log in</button>
-            </div>
-          </form>
-        </section>
-      </div>
-    )
+    const params = { email, password }
+
+    await axios.post('http://localhost:8000/login', params, {
+      withCredentials: true
+    })
+      .then(async(response) => {
+        cookies.set('TOKEN', response.data.authToken, { path: '/' })
+
+        await authenticateUser()
+
+        navigate('/')
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        console.log("error loggin in...", errorDescription);
+        setErrorMessage(errorDescription);
+      });
+  }
+
+  return (
+    <>
+      <h1 className="formModalTitle">Log In</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="inputContainer">
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" id="name" onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div className="inputContainer">
+          <label htmlFor="password">Password</label>
+          <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <div className="btnContainer">
+          <p>{errorMessage}</p>
+          <button type="submit">Log in</button><br />
+          <p onClick={changeForm}>Create an account.</p>
+        </div>
+      </form>
+    </>
+  )
 }
 
 export default Login
